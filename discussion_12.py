@@ -52,10 +52,12 @@ def job_and_hire_date(cur, conn):
 # Apply JOIN clause to match individual employees
 def problematic_salary(cur, conn):
     lstTuple = []
-    cur.execute(f"SELECT employees.first_name,employees.last_name FROM employees WHERE employees.salary < 1000000")
+    cur.execute(f"SELECT employees.first_name,employees.last_name FROM employees JOIN jobs ON employees.job_id = jobs.job_id \
+        WHERE employees.salary < jobs.max_salary - jobs.min_salary")
     rows = cur.fetchall()
     for row in rows:
         lstTuple.append(row)
+        print(row)
     return lstTuple
 
 # TASK 4: VISUALIZATION
